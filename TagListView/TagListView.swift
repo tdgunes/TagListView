@@ -15,6 +15,31 @@ import UIKit
 @IBDesignable
 public class TagListView: UIView {
     
+    @IBInspectable public var image: UIImage?  {
+        didSet {
+            let ticketImage = UIImage(named: "ticket.png")
+
+            for tagView in tagViews {
+                var imageView = UIImageView(image: ticketImage)
+                imageView.frame = CGRectMake(0,0, 30, 30)
+                tagView.addSubview(imageView)
+                
+//                UIImageView *yourPlusSign = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"yourPlusSignImageTitle"]];
+//                yourPlusSign.frame = CGRectMake(x, y, width, height);//choose values that fit properly inside the frame of your baseButton
+//                //or grab the width and height of yourBaseButton and change accordingly
+//                yourPlusSign.contentMode=UIViewContentModeScaleAspectFill;//or whichever mode works best for you
+//                [yourBaseButton addSubview:yourPlusSign];
+                
+                
+                
+                tagView.setImage(self.image, forState: UIControlState.Normal)
+            }
+        }
+    }
+    
+    
+
+    
     @IBInspectable public var textColor: UIColor = UIColor.whiteColor() {
         didSet {
             for tagView in tagViews {
@@ -86,7 +111,8 @@ public class TagListView: UIView {
             rearrangeViews()
         }
     }
-    public var textFont: UIFont = UIFont.systemFontOfSize(12) {
+    
+    @IBInspectable public var textFont: UIFont = UIFont.systemFontOfSize(9) {
         didSet {
             for tagView in tagViews {
                 tagView.textFont = textFont
@@ -155,6 +181,16 @@ public class TagListView: UIView {
     }
     
     // MARK: - Manage tags
+    
+    public func getEstimatedHeight() -> CGFloat {
+        self.rearrangeViews()
+        var height = CGFloat(rows+1) * (tagViewHeight + marginY + 10)
+        if rows > 0 {
+            height -= marginY
+        }
+        println("Height: \(height) rows:\(self.rows)")
+        return height
+    }
     
     public override func intrinsicContentSize() -> CGSize {
         var height = CGFloat(rows) * (tagViewHeight + marginY)

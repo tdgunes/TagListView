@@ -88,12 +88,13 @@ public class TagView: UIButton {
     init(title: String) {
         super.init(frame: CGRectZero)
         setTitle(title, forState: UIControlState.Normal)
-        
+
         setupView()
     }
     
     private func setupView() {
         frame.size = intrinsicContentSize()
+
     }
     
     // MARK: - layout
